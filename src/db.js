@@ -5,7 +5,7 @@ const path = require('path');
 const {
   DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
-const sequelize = new Sequelize(`postgres://lobbylair_xk6b_user:9ZQ8EFlPa4zLJfQ0PhhiJnySbOaVofO3@dpg-ci9husl9aq02iht7ros0-a/lobbylair_xk6b`, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/lobbylair`, {
   logging: false, 
   native: false, 
 });
@@ -26,7 +26,7 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Post, User, Game, Genre, GameMode, ChatMessage} = sequelize.models;
+const { Post, User, Game, Genre, GameMode, ChatMessage, Payment} = sequelize.models;
 Game.belongsToMany(Genre, {through: 'Game_Genre'})
 Genre.belongsToMany(Game, {through: 'Game_Genre'})
 Game.belongsToMany(GameMode, {through: 'Game_GameMode'})
@@ -41,6 +41,7 @@ Post.belongsTo(User)
 Game.hasMany(Post)
 Post.belongsTo(Game)
 ChatMessage.belongsTo(User)
+Payment.belongsTo(User)
 module.exports = {
   ...sequelize.models, 
   conn: sequelize,     

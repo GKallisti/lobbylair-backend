@@ -15,6 +15,11 @@ module.exports = (sequelize) =>{
   message: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
-});
+    },
+  }, 
+  {
+    paranoid:true,
+    timestamps:false
+  })
+
 }

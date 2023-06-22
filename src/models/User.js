@@ -20,7 +20,7 @@ module.exports = (sequelize) =>{
           allowNull:false
         },
         isPremium: {
-          type: DataTypes.BOOLEAN
+          type: DataTypes.BOOLEAN,
         },
         name: {
           type: DataTypes.STRING,
