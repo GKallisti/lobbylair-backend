@@ -5,7 +5,7 @@ const path = require('path');
 const {
   DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/lobbylair`, {
+const sequelize = new Sequelize(`postgres://lobbylair_xk6b_user:9ZQ8EFlPa4zLJfQ0PhhiJnySbOaVofO3@dpg-ci9husl9aq02iht7ros0-a/lobbylair_xk6b`, {
   logging: false, 
   native: false, 
 });
