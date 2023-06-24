@@ -262,6 +262,27 @@ const allGames =[
     gameMode:["PvP", "Co-op" ],
     genres: ["Action", "Sports","Racing"],
     thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/037.webp?alt=media&token=62e1b9d1-5e07-451c-b9a3-cc5ed101103d"
+  },
+  {
+    id: "valheim",
+    name: "Valheim",
+    gameMode: ["PvP", "Co-op"],
+    genres: ["Survival", "RPG", "Adventure"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/Valheim_2.webp?alt=media&token=6ad54bad-a2df-4fc1-ac4f-89285457c61f"
+  },
+  {
+    id: "divinity2",
+    name: "Divinity: Original Sin 2 - Definitive Edition",
+    gameMode: ["PvP", "Team PvP", "Co-op"],
+    genres: ["RPG", "Adventure", "Action"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/divinity2_1.webp?alt=media&token=faa501e6-7e67-4bdc-8751-71ac615b6781"
+  },
+  {
+    id: "diablo4",
+    name: "Diablo 4",
+    gameMode: ["PvP", "Co-op"],
+    genres: ["RPG", "Action"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/Diablo-4_2.webp?alt=media&token=db53d5e2-6253-4090-a2c9-e723297bfa5f"
   }
 
   ]

@@ -5,7 +5,6 @@ const { User } = require("../db.js");
 const { where } = require("sequelize");
 
 const handleLogin = async (req, res) => {
-
   const { email, password } = req.body;
   try {
     const user_Db = await User.findOne({ where: { email: email } });
@@ -32,9 +31,11 @@ const handleLogin = async (req, res) => {
       perfilUrl: user_Db.perfilUrl,
       image: user_Db.image,
       description: user_Db.description,
+      isAdmin:user_Db.isAdmin,
+      isPremium:user_Db.isPremium,
       token,
     };
-
+    console.log(respuesta);
     return res.json(respuesta);
   } catch (err) {
     res.status(500).json({ message: "Internal server error" });
@@ -58,10 +59,6 @@ const handleSignUp = async (req, res) => {
       name,
     });
 
-    const token = jwt.sign({ userId: newUser.id }, process.env.SECRET_KEY, {
-      expiresIn: 60 * 60 * 24 * 7,
-    });
-
     const respuesta = {
       id: newUser.id,
       name: newUser.name,
@@ -72,12 +69,11 @@ const handleSignUp = async (req, res) => {
       description: newUser.description,
     };
 
-    return res.header("Authorization", "Bearer " + token).json(respuesta);
+    return res.json({ success: true });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 module.exports = { handleLogin, handleSignUp };

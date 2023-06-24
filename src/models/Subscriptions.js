@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "Payment",
+    "Subscriptions",
     {
       id: {
         allowNull: false,
@@ -10,13 +10,8 @@ module.exports = (sequelize) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      amount: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      currency: {
+      type: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
     },
     {

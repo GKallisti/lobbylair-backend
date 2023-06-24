@@ -16,6 +16,7 @@ const {
   deletePost,
   getPostsWithPagination,
   getGameMode,
+  getGenres,
 } = require("../controllers/post.js");
 const {
   getFavorites,
@@ -31,6 +32,9 @@ const {
   createUser,
   updateUser,
   deleteUser,
+  getUserPayments,
+  getUserSubscriptions,
+  getAdminUsers,
 } = require("../controllers/users.js");
 const {
   handleLogin,
@@ -42,7 +46,7 @@ const {
 } = require("../controllers/chatController.js");
 const {
   createPreference,
-  feedback
+  feedback,
 } = require("../controllers/mecadoPagoController.js");
 
 const { sendEmail } = require("../controllers/sendEmail");
@@ -59,7 +63,11 @@ router.delete("/games/:id", deleteGame);
 // Ruta para obtener juegos con paginación y filtros
 router.get("/games/page", getGamesWithPagination);
 
+//Ruta para obtener generos
+router.get("/games/genres", getGenres);
+
 router.get("/games/mode/", getGameMode);
+
 // Endpoint para obtener un game por id
 router.get("/games/:id", getGamesById);
 
@@ -71,6 +79,9 @@ router.post("/games", postGames);
 
 // Endpoint para obtener todos los usuarios
 router.get("/users", getAllUsers);
+
+// //Endopoint para obtener los Administradores
+router.get("/users/admins", getAdminUsers);
 
 // Endpoint para obtener un usuario por id
 router.get("/users/:id", authenticateToken, getUserById);
@@ -103,10 +114,10 @@ router.put("/users/:id", updateUser);
 router.delete("/users/:id", deleteUser);
 
 // Endpoint para obtener los favoritos de un usuario
-router.get("/favorite/:userId", getFavorites);
+router.get("/favorite/:token", getFavorites);
 
 // Endpoint para eliminar un juego de los favoritos de un usuario
-router.delete("/favorite/:userId/:gameId", removeFavoriteGame);
+router.delete("/favorite", removeFavoriteGame);
 
 // Endpoint para agregar un juego a los favoritos de un usuario
 router.post("/favorite", createFavorite);
@@ -141,12 +152,14 @@ router.get("/chat", sendMessage, getMessages);
 //Endpoint para mecado pago
 router.post("/payment", createPreference);
 
-router.post("/feedback", feedback);
+router.get("/feedback", feedback);
 
 router.post("/sendEmail", sendEmail);
 
 router.post("/resetPassword", resetPassword);
 
 router.get("/success", (req, res) => res.send("Success"));
+
+router.get("/probando", getUserPayments);
 
 module.exports = router;

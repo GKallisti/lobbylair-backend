@@ -1,9 +1,10 @@
 const axios = require("axios");
-const { User } = require("../db");
+const { User, Payment, Subscriptions } = require("../db");
 const { Op } = require("sequelize");
 const { validationResult } = require("express-validator");
 const hash = require("../utils/bcrypt");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 // Función para obtener todos los usuarios de la base de datos
 const getAllUsers = async (req, res) => {
   console.log("a");
@@ -89,8 +90,22 @@ const getUserByEmail = async (req, res) => {
   }
 };
 
+const getAdminUsers = async (req, res) => {
+  const { isAdmin } = req.params;
+  try {
+    const admins = await User.findAll({
+      where: {
+        isAdmin: true,
+      },
+    });
+    res.status(200).json(admins);
+  } catch (error) {
+    return res.status(404).json({ message: "Error searching for Admins" });
+  }
+};
+
 const createUser = async (req, res) => {
-  const { name, email, password} = req.body;
+  const { name, email, password } = req.body;
   const allUsers = await User.findAll();
   const userExists = allUsers.find((user) => user.email === email);
   if (userExists) {
@@ -142,7 +157,7 @@ const updateUser = async (req, res) => {
   if (isAdmin) updateFields.isAdmin = isAdmin;
   if (isPremium) updateFields.isPremium = isPremium;
   if (perfilUrl) updateFields.perfilUrl = perfilUrl;
-
+  console.log(isAdmin);
   try {
     const user = await User.update(updateFields, {
       where: {
@@ -214,6 +229,46 @@ const getUsersWithPagination = async (req, res) => {
   }
 };
 
+const getUserPayments = async (req, res) => {
+  const { token } = req.query;
+  try {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decodedToken.userId;
+
+    const user = await User.findByPk(userId, {
+      include: Payment,
+    });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    return res.json(user.Payments);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Failed to get user payments" });
+  }
+};
+
+const getUserSubscriptions = async (req, res) => {
+  const { token } = req.query;
+  try {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decodedToken.userId;
+    const user = await User.findByPk(userId, {
+      include: Subscriptions,
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    return res.json(user.Subscription);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Failed to get user subscriptions" });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -223,4 +278,7 @@ module.exports = {
   updateUser,
   deleteUser,
   getUsersWithPagination,
+  getUserPayments,
+  getUserSubscriptions,
+  getAdminUsers,
 };
