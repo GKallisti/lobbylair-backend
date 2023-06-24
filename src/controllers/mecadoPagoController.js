@@ -31,9 +31,9 @@ const createPreference = async (req, res) => {
       },
     ],
     back_urls: {
-      success: `http://localhost:3001/feedback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
-      failure: "http://localhost:3001/feedback",
-      pending: "http://localhost:3001/feedback",
+      success: `https://llbcknd.onrender.com/feedback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
+      failure: "https://llbcknd.onrender.com/feedback",
+      pending: "https://llbcknd.onrender.com/feedback",
     },
     auto_return: "approved",
   };

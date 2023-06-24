@@ -34,8 +34,8 @@ const createOrder = async (req, res) => {
       landing_page: "NO_PREFERENCE",
       shipping_preference: "NO_SHIPPING",
       user_action: "PAY_NOW",
-      return_url: `http://localhost:3001/capture-order?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
-      cancel_url: "http://localhost:3001/cancel-order",
+      return_url: `https://llbcknd.onrender.com/capture-order?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
+      cancel_url: "https://llbcknd.onrender.com/cancel-order",
     },
   };
 

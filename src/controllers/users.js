@@ -15,7 +15,7 @@ const getAllUsers = async (req, res) => {
     res.json(users);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Error getting countries" });
+    return res.status(500).json({ message: "Error getting Users" });
   }
 };
 // Función para obtener los detalles de un usuario por su ID
