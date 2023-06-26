@@ -6,6 +6,7 @@ const { where } = require("sequelize");
 
 const handleLogin = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password);
   try {
     const user_Db = await User.findOne({ where: { email: email } });
 
@@ -31,8 +32,8 @@ const handleLogin = async (req, res) => {
       perfilUrl: user_Db.perfilUrl,
       image: user_Db.image,
       description: user_Db.description,
-      isAdmin:user_Db.isAdmin,
-      isPremium:user_Db.isPremium,
+      isAdmin: user_Db.isAdmin,
+      isPremium: user_Db.isPremium,
       token,
     };
     console.log(respuesta);

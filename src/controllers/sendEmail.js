@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 
 const sendEmail = async (req, res) => {
   const { email } = req.body;
-  console.log(email);
   const oldUser = await User.findOne({
     where: {
       email: {
@@ -21,7 +20,6 @@ const sendEmail = async (req, res) => {
   const token = jwt.sign({ id: oldUser.id }, process.env.SECRET_KEY, {
     expiresIn: "1h",
   });
-  console.log(token);
   const transporter = nodemailer.createTransport({
     service: "hotmail",
     auth: {
@@ -29,13 +27,15 @@ const sendEmail = async (req, res) => {
       pass: process.env.MY_PASSWORD,
     },
   });
+  console.log("a");
 
   const mailOptions = {
     from: process.env.MY_EMAIL,
     to: email,
     subject: "Recuperación de contraseña",
-    html: `<h3>Recuperación de contraseña</h3> <p> Para restablecer tu contraseña, haz clic en el siguiente enlace:</p>
-    <p><a href="http://localhost:3000/resetPassword/${token}">Restablecer contraseña</a></p>`,
+    html: ` <h3>Recuperación de contraseña</h3>
+             <p>Para restablecer tu contraseña, haz clic en el siguiente enlace:</p>
+    <p><a href="https://lobbylair-y5kg.onrender.com/resetPassword/${token}">Restablecer contraseña</a></p>`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {

@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 async function getFavorites(req, res) {
   const { token } = req.params;
   const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
-
   if (!decodedToken) {
     return res.status(401).json({ error: "No autorizado" });
   }
