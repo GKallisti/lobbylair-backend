@@ -51,8 +51,13 @@ async function createFavorite(req, res) {
     if (!user || !game) {
       return res.status(404).json({ error: "Usuario o juego no encontrado" });
     }
-    console.log(game);
-    await user.addGames(game);
+    // Extraer los campos name, id y thumbnail del objeto game
+    const { name, id: Id, thumbnail } = game;
+
+    // Crear la relación favorita y asignar los campos a la tabla intermedia
+    await user.addGames(game, {
+      through: { name, Id, thumbnail }
+    });
     return res.status(200).json({ success: true });
   } catch (error) {
     console.error("Error al crear la relación favorita:", error);
