@@ -9,12 +9,10 @@ module.exports = (sequelize) =>{
             type: DataTypes.INTEGER
         },
         name:{
-            type:DataTypes.STRING,
-            allowNull:false
+            type:DataTypes.STRING
         },
         thumbnail:{
-            type:DataTypes.STRING,
-            allowNull:false
+            type:DataTypes.STRING
         },
     },
     {
