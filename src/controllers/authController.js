@@ -3,16 +3,19 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User } = require("../db.js");
 const { where } = require("sequelize");
+const axios = require("axios");
 
 const handleLogin = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
+
   try {
     const user_Db = await User.findOne({ where: { email: email } });
 
     if (!user_Db) {
       return res.status(404).json({ message: "Email or password is invalid" });
     }
+
+    const username = user_Db.dataValues.name;
 
     const isPasswordMatch = await bcrypt.compare(password, user_Db.password);
 
@@ -36,7 +39,15 @@ const handleLogin = async (req, res) => {
       isPremium: user_Db.isPremium,
       token,
     };
-    console.log(respuesta);
+
+    const r = await axios.get("https://api.chatengine.io/users/me/", {
+      headers: {
+        "Project-ID": process.env.CHAT_ENGINE_PROJECT_ID,
+        "User-Name": username,
+        "User-Secret": user_Db.dataValues.password,
+      },
+    });
+
     return res.json(respuesta);
   } catch (err) {
     res.status(500).json({ message: "Internal server error" });
@@ -69,7 +80,17 @@ const handleSignUp = async (req, res) => {
       image: newUser.image,
       description: newUser.description,
     };
-
+    const r = await axios.post(
+      "https://api.chatengine.io/users/",
+      {
+        username: name,
+        secret: hashedPassword,
+        email,
+        first_name: name,
+        last_name: name,
+      },
+      { headers: { "Private-Key": process.env.CHAT_ENGINE_PRIVATE_KEY } }
+    );
     return res.json({ success: true });
   } catch (err) {
     console.log(err);

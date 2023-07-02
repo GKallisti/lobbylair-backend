@@ -5,7 +5,7 @@ async function getPosts(req, res) {
   try {
     let posts = await Post.findAll({
       include: [
-        { model: User, attributes: ["id", "name"] },
+        { model: User, attributes: ["id", "name", "image"] },
         { model: Game, attributes: ["id", "name", "thumbnail"] },
         { model: GameMode, attributes: ["id", "name"] },
       ],

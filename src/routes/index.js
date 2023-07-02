@@ -21,6 +21,7 @@ const {
 const {
   getFavorites,
   createFavorite,
+  getAllFavorites,
   removeFavoriteGame,
 } = require("../controllers/favorite.js");
 const {
@@ -35,6 +36,7 @@ const {
   getUserPayments,
   getUserSubscriptions,
   getAdminUsers,
+  getPassword,
 } = require("../controllers/users.js");
 const {
   handleLogin,
@@ -48,6 +50,11 @@ const {
   createPreference,
   feedback,
 } = require("../controllers/mecadoPagoController.js");
+const {
+  createResponse,
+  getResponse,
+  deleteResponse,
+} = require("../controllers/Response.js");
 
 const { sendEmail } = require("../controllers/sendEmail");
 const { resetPassword } = require("../controllers/resetPassword");
@@ -113,6 +120,7 @@ router.put("/users/:id", updateUser);
 // Endpoint para eliminar un usuario
 router.delete("/users/:id", deleteUser);
 
+router.get('/favorite', getAllFavorites)
 // Endpoint para obtener los favoritos de un usuario
 router.get("/favorite/:token", getFavorites);
 
@@ -160,6 +168,16 @@ router.post("/resetPassword", resetPassword);
 
 router.get("/success", (req, res) => res.send("Success"));
 
-router.get("/probando", getUserPayments);
+router.get("/user/payment", getUserPayments);
+
+router.get("/user/subscription", getUserSubscriptions);
+
+router.post("/response", createResponse);
+
+router.get("/response/:PostId", getResponse);
+
+router.delete("/response/:id", deleteResponse);
+
+router.get("/user/password/:id", getPassword);
 
 module.exports = router;

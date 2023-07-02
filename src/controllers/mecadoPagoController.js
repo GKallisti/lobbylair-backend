@@ -1,9 +1,10 @@
+require('dotenv').config();
 const mercadopago = require("mercadopago");
 const express = require("express");
 const server = require("../app.js");
 const { Payment, Subscriptions, User } = require("../db");
 const jwt = require("jsonwebtoken");
-
+const { SECRET_KEY } = process.env;
 require("dotenv").config();
 const { MERCADOPAGO_ACCESS_TOKEN } = process.env;
 server.use = express.json();
@@ -14,7 +15,7 @@ mercadopago.configure({
 const createPreference = async (req, res) => {
   const { amount, currency, type, token } = req.body;
 
-  const user = jwt.verify(token, process.env.SECRET_KEY);
+  const user = jwt.verify(token, SECRET_KEY);
 
   if (!user) {
     return res.status(401).json({ error: "Unauthorized" });
@@ -31,7 +32,7 @@ const createPreference = async (req, res) => {
       },
     ],
     back_urls: {
-      success: `https://llbcknd.onrender.com/feedback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
+      success: `https://lobbylair-y5kg.onrender.com/feedback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
       failure: "https://llbcknd.onrender.com/feedback",
       pending: "https://llbcknd.onrender.com/feedback",
     },
@@ -69,6 +70,7 @@ const feedback = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
+
   }
 };
 module.exports = {

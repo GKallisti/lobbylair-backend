@@ -2,13 +2,13 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { Payment, Subscriptions, User } = require("../db");
 const axios = require("axios");
-const { PAYPAL_API_SECRET, PAYPAL_API_CLIENT, PAYPAL_API } = process.env;
-const API = "https://api-m.sandbox.paypal.com";
+const { PAYPAL_API_SECRET, PAYPAL_API_CLIENT, PAYPAL_API, SECRET_KEY } = process.env;
+const API = PAYPAL_API || "https://api-m.sandbox.paypal.com";
 
 const createOrder = async (req, res) => {
   const { amount, currency, type, token } = req.body;
 
-  const user = jwt.verify(token, process.env.SECRET_KEY);
+  const user = jwt.verify(token, SECRET_KEY);
 
   if (!user) {
     return res.status(401).json({ error: "Unauthorized" });
@@ -34,7 +34,7 @@ const createOrder = async (req, res) => {
       landing_page: "NO_PREFERENCE",
       shipping_preference: "NO_SHIPPING",
       user_action: "PAY_NOW",
-      return_url: `https://llbcknd.onrender.com/capture-order?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
+      return_url: `https://lobbylair-y5kg.onrender.com/feedback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
       cancel_url: "https://llbcknd.onrender.com/cancel-order",
     },
   };
@@ -50,10 +50,10 @@ const createOrder = async (req, res) => {
   };
 
   try {
+    console.log("a");
     const {
       data: { access_token },
     } = await axios.post(`${API}/v1/oauth2/token`, params, { headers });
-    console.log("a");
     const response = await axios.post(`${API}/v2/checkout/orders`, order, {
       headers: { Authorization: `Bearer ${access_token}` },
     });
@@ -90,7 +90,6 @@ const captureOrder = async (req, res) => {
       type: type,
     });
 
-    // Establecer la relación entre la suscripción y el usuario
     await subscription.setUser(user);
 
     return res.send("Payment successful");

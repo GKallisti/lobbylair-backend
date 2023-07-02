@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 const sequelize = new Sequelize(
-  `postgres://lldb_user:L3qdJSf2vf8kaUwvWLOa7SadxMgqLvWc@dpg-cibhua95rnuk9qf1qm90-a/lldb`,
+  `postgres://lbbylidb_user:tLm9EaOKyK40fAAI5G10L37tQzpLBb8w@dpg-cigs26lgkuvojjbbt18g-a/lbbylidb`,
   {
     logging: false,
     native: false,
@@ -41,6 +41,7 @@ const {
   ChatMessage,
   Payment,
   Subscriptions,
+  Response,
 } = sequelize.models;
 Game.belongsToMany(Genre, { through: "Game_Genre" });
 Genre.belongsToMany(Game, { through: "Game_Genre" });
@@ -62,6 +63,12 @@ Payment.belongsTo(User);
 
 User.hasOne(Subscriptions);
 Subscriptions.belongsTo(User);
+
+Post.hasMany(Response);
+Response.belongsTo(Post);
+
+User.hasMany(Response);
+Response.belongsTo(User);
 
 module.exports = {
   ...sequelize.models,

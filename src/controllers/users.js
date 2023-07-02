@@ -103,7 +103,7 @@ const getAdminUsers = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, image } = req.body;
   const allUsers = await User.findAll();
   const userExists = allUsers.find((user) => user.email === email);
   if (userExists) {
@@ -117,6 +117,7 @@ const createUser = async (req, res) => {
         email: email,
         password: password,
         isAdmin: false,
+        image:image,
         perfilUrl: "",
         isPremium: false,
       },
@@ -155,7 +156,6 @@ const updateUser = async (req, res) => {
   if (isAdmin) updateFields.isAdmin = isAdmin;
   if (isPremium) updateFields.isPremium = isPremium;
   if (perfilUrl) updateFields.perfilUrl = perfilUrl;
-  console.log(isAdmin);
   try {
     const user = await User.update(updateFields, {
       where: {
@@ -230,6 +230,7 @@ const getUsersWithPagination = async (req, res) => {
 const getUserPayments = async (req, res) => {
   const { token } = req.query;
   try {
+    console.log(token);
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decodedToken.userId;
 
@@ -267,6 +268,17 @@ const getUserSubscriptions = async (req, res) => {
   }
 };
 
+const getPassword = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByPk(id);
+    res.json(user.password);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Failed to get password" });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -279,4 +291,5 @@ module.exports = {
   getUserPayments,
   getUserSubscriptions,
   getAdminUsers,
+  getPassword,
 };

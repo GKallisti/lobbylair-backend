@@ -33,8 +33,7 @@ const sendEmail = async (req, res) => {
     from: process.env.MY_EMAIL,
     to: email,
     subject: "Recuperación de contraseña",
-    html: ` <h3>Recuperación de contraseña</h3>
-             <p>Para restablecer tu contraseña, haz clic en el siguiente enlace:</p>
+    html: `<h1>Recuperación de contraseña</h1> <br> <p>Para restablecer tu contraseña, haz clic en el siguiente enlace:</p>
     <p><a href="https://lobbylair-y5kg.onrender.com/resetPassword/${token}">Restablecer contraseña</a></p>`,
   };
 
