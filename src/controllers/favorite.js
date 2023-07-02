@@ -47,11 +47,12 @@ async function createFavorite(req, res) {
 
     const user = await User.findByPk(userId.toString());
     const game = await Game.findByPk(id);
+    
     if (!user || !game) {
       return res.status(404).json({ error: "Usuario o juego no encontrado" });
     }
-
-    await user.addGame(game);
+    console.log(game);
+    await user.addGames(game);
     return res.status(200).json({ success: true });
   } catch (error) {
     console.error("Error al crear la relación favorita:", error);
