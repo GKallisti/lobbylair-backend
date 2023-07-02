@@ -50,7 +50,7 @@ const createOrder = async (req, res) => {
   };
 
   try {
-    console.log("a");
+    
     const {
       data: { access_token },
     } = await axios.post(`${API}/v1/oauth2/token`, params, { headers });
@@ -61,6 +61,7 @@ const createOrder = async (req, res) => {
     return res.json(response.data);
   } catch (error) {
     res.status(500).json({ error: "Failed to create PayPal order" });
+    console.log(error);
   }
 };
 
@@ -96,6 +97,7 @@ const captureOrder = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json("Failed to capture order");
+
   }
 };
 

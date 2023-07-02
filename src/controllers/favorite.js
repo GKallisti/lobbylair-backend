@@ -51,10 +51,8 @@ async function createFavorite(req, res) {
     if (!user || !game) {
       return res.status(404).json({ error: "Usuario o juego no encontrado" });
     }
-    // Extraer los campos name, id y thumbnail del objeto game
     const { name, id: Id, thumbnail } = game;
 
-    // Crear la relación favorita y asignar los campos a la tabla intermedia
     await user.addGames(game, {
       through: { name, Id, thumbnail }
     });
