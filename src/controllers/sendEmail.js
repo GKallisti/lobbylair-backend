@@ -34,7 +34,7 @@ const sendEmail = async (req, res) => {
     to: email,
     subject: "Recuperación de contraseña",
     html: `<h1>Recuperación de contraseña</h1> <br> <p>Para restablecer tu contraseña, haz clic en el siguiente enlace:</p>
-    <p><a href="https://lobbylair-y5kg.onrender.com/resetPassword/${token}">Restablecer contraseña</a></p>`,
+    <p><link href="https://lobbylair-y5kg.onrender.com/resetPassword/${token}"> Restablecer contraseña></p>`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
