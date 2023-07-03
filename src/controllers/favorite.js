@@ -56,6 +56,7 @@ async function createFavorite(req, res) {
     await user.addGames(game, {
       through: { name, Id, thumbnail }
     });
+    
     return res.status(200).json({ success: true });
   } catch (error) {
     console.error("Error al crear la relación favorita:", error);

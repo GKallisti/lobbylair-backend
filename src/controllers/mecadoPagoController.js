@@ -32,7 +32,7 @@ const createPreference = async (req, res) => {
       },
     ],
     back_urls: {
-      success: `https://lobbylair-y5kg.onrender.com/feedback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
+      success: `https://lobbylair.vercel.app/feedback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
       failure: "https://llbcknd.onrender.com/feedback",
       pending: "https://llbcknd.onrender.com/feedback",
     },
