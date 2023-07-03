@@ -34,7 +34,7 @@ const sendEmail = async (req, res) => {
     to: email,
     subject: "Recuperación de contraseña",
     html: `<h1>Recuperación de contraseña</h1> <br> <p>Para restablecer tu contraseña, haz clic en el siguiente enlace:</p>
-    <p> Restablecer contraseña></p>  <p> https://lobbylair.vercel.app/resetPassword/${token}" </p>`,
+    <p> Restablecer contraseña></p>  <p> https://lobbylair-gkallisti.vercel.app/resetPassword/${token}" </p>`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
