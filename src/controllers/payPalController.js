@@ -3,7 +3,7 @@ require("dotenv").config();
 const { Payment, Subscriptions, User } = require("../db");
 const axios = require("axios");
 const { PAYPAL_API_SECRET, PAYPAL_API_CLIENT, SECRET_KEY } = process.env;
-const API = "https://api-m.sandbox.paypal.com";
+const API = "https://api-m.paypal.com";
 
 const createOrder = async (req, res) => {
   const { amount, currency, type, token } = req.body;
