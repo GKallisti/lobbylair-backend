@@ -34,7 +34,7 @@ const createOrder = async (req, res) => {
       landing_page: "NO_PREFERENCE",
       shipping_preference: "NO_SHIPPING",
       user_action: "PAY_NOW",
-      return_url: `https://lobbylair.vercel.app/feedback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
+      return_url: `https://lobbylair-gkallisti.vercel.app/feedback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
       cancel_url: "https://llbcknd.onrender.com/cancel-order",
     },
   };
