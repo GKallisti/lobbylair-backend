@@ -84,9 +84,19 @@ const captureOrder = async (req, res) => {
       currency: currency,
     });
 
+
     await payment.setUser(userId);
 
     const user = await User.findByPk(userId);
+    await User.update( {
+      isPremium: true
+      
+    } , {
+      where: {
+        id: userId,
+      },
+    })
+
     const subscription = await Subscriptions.create({
       type: type,
     });
