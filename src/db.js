@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 const sequelize = new Sequelize(
-  `postgres://dbshiet_user:vACNWPfp9tneMkhbtd7gFdSrhzU4uGEQ@dpg-cihi0nqip7vpelp8mr6g-a/dbshiet`,
+  `postgres://lldbthisfuckingshiet_user:6dG7VK4VZ4tcEA9tOv2FmUYD4RVqtnkr@dpg-cilhsdtgkuvinfl20a1g-a/lldbthisfuckingshiet`,
   {
     logging: false,
     native: false,
