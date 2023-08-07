@@ -40,14 +40,7 @@ const handleLogin = async (req, res) => {
       token,
     };
 
-    const r = await axios.get("https://api.chatengine.io/users/me/", {
-      headers: {
-        "Project-ID": process.env.CHAT_ENGINE_PROJECT_ID,
-        "User-Name": username,
-        "User-Secret": user_Db.dataValues.password,
-      },
-    });
-
+   
     return res.json(respuesta);
   } catch (err) {
     res.status(500).json({ message: "Internal server error" });
@@ -80,17 +73,7 @@ const handleSignUp = async (req, res) => {
       image: newUser.image,
       description: newUser.description,
     };
-    const r = await axios.post(
-      "https://api.chatengine.io/users/",
-      {
-        username: name,
-        secret: hashedPassword,
-        email,
-        first_name: name,
-        last_name: name,
-      },
-      { headers: { "Private-Key": process.env.CHAT_ENGINE_PRIVATE_KEY } }
-    );
+   
     return res.json({ success: true });
   } catch (err) {
     console.log(err);
